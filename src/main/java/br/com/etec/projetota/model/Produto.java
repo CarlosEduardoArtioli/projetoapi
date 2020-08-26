@@ -1,6 +1,8 @@
 package br.com.etec.projetota.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,9 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="produto")
@@ -31,6 +36,10 @@ public class Produto {
 	@ManyToOne
 	@JoinColumn(name="idcategoria")
 	private Categoria categoria;
+	
+	@JsonIgnore()
+	@OneToMany(mappedBy = "produto")
+	private List<ItemPedido> produtos = new ArrayList<>();
 
 	public Integer getId() {
 		return id;
@@ -62,6 +71,14 @@ public class Produto {
 
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
+	}
+
+	public List<ItemPedido> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List<ItemPedido> produtos) {
+		this.produtos = produtos;
 	}
 
 	@Override

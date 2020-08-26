@@ -21,7 +21,24 @@ CREATE TABLE IF NOT EXISTS Cliente(
    nome VARCHAR(200) NOT NULL,
    telefone VARCHAR(20) NOT NULL,
    cidade_id INT NOT NULL
-)ENGINE=InnoDB CHARSET=UTF8;
+) ENGINE=InnoDB CHARSET=UTF8;
+
+CREATE TABLE IF NOT EXISTS Pedido(
+   id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   datapedido DATE NOT NULL,
+   idcliente INT NOT NULL,
+   valorpedido DECIMAL(12,2) NOT NULL
+) ENGINE=InnoDB CHARSET=UTF8;
+
+CREATE TABLE IF NOT EXISTS ItemPedido(
+   id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+   idpedido BIGINT NOT NULL,
+   codigoproduto INT NOT NULL,
+   qtdeItem DECIMAL(12,2),
+   valorunitario DECIMAL(12,2),
+   totalitem DECIMAL(12,2)
+) ENGINE=InnoDB CHARSET=UTF8;
+
 
 ALTER TABLE Produto ADD CONSTRAINT
 fk_categoria_produto FOREIGN KEY(idcategoria)
@@ -30,6 +47,18 @@ REFERENCES Categoria(id);
 ALTER TABLE Cliente ADD CONSTRAINT
 fk_cliente_cidade FOREIGN KEY(cidade_id)
 REFERENCES cidade(id);
+
+ALTER TABLE Pedido ADD CONSTRAINT
+fk_pedido_cliente FOREIGN KEY (idcliente)
+REFERENCES cliente(id);
+
+ALTER TABLE ItemPedido ADD CONSTRAINT
+fk_itempedido_pedido FOREIGN KEY (idpedido)
+REFERENCES pedido(id);
+
+ALTER TABLE ItemPedido ADD CONSTRAINT
+fk_itempedido_produto FOREIGN KEY (codigoproduto)
+REFERENCES produto(id);
 
 
 INSERT INTO cidade(nome, estado) VALUES ('Macatuba', 'SP');
@@ -123,11 +152,22 @@ INSERT INTO Categoria (nome) VALUES ('Consoles');
 INSERT INTO Produto (nome, preco, idcategoria) VALUES ('GTA V', '59.99', '1');
 INSERT INTO Produto (nome, preco, idcategoria) VALUES ('Ark Survival', '199.90', '1');
 INSERT INTO Produto (nome, preco, idcategoria) VALUES ('Counter-Strike Global Ofensive', '59.99', '1');
-
 INSERT INTO Produto (nome, preco, idcategoria) VALUES ('i5 9100', '1550.00', '2');
 INSERT INTO Produto (nome, preco, idcategoria) VALUES ('RTX 2080 TI', '3589.90', '2');
 INSERT INTO Produto (nome, preco, idcategoria) VALUES ('SSD 1TB', '1090.00', '2');
-
 INSERT INTO Produto (nome, preco, idcategoria) VALUES ('PS4', '1536.99', '3');
 INSERT INTO Produto (nome, preco, idcategoria) VALUES ('XBOX ONE X', '1727.90', '3');
 INSERT INTO Produto (nome, preco, idcategoria) VALUES ('Nintendo Switch', '1990.99', '3');
+
+INSERT INTO Pedido (datapedido, idcliente, valorpedido) VALUES ('2020/08/10', 1, 100.00);
+INSERT INTO Pedido (datapedido, idcliente, valorpedido) VALUES ('2020/08/10', 1, 1220.00);
+INSERT INTO Pedido (datapedido, idcliente, valorpedido) VALUES ('2020/08/09', 2, 1380.00);
+INSERT INTO Pedido (datapedido, idcliente, valorpedido) VALUES ('2020/08/09', 2, 1400.00);
+INSERT INTO Pedido (datapedido, idcliente, valorpedido) VALUES ('2020/08/08', 3, 1500.00);
+INSERT INTO Pedido (datapedido, idcliente, valorpedido) VALUES ('2020/08/08', 3, 233.00);
+INSERT INTO Pedido (datapedido, idcliente, valorpedido) VALUES ('2020/08/07', 5, 455.50);
+INSERT INTO Pedido (datapedido, idcliente, valorpedido) VALUES ('2020/08/06', 4, 656.60);
+INSERT INTO Pedido (datapedido, idcliente, valorpedido) VALUES ('2020/08/05', 3, 40.00);
+INSERT INTO Pedido (datapedido, idcliente, valorpedido) VALUES ('2020/08/05', 7, 3000.00);
+
+INSERT INTO ItemPedido (idpedido, codigoproduto, qtdeitem, valorunitario, totalitem) VALUES (1, 6, 10, 10.00, 100.00);
