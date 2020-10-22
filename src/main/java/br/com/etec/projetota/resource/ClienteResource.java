@@ -33,6 +33,11 @@ public class ClienteResource {
 		return clienteService.listarClientes();
 	}
 	
+	@GetMapping("/cli/{nome}")
+	public List<Cliente> porNome(@PathVariable String nome) {
+		return clienteService.localizaClienteNome(nome);
+	}
+	
 	@GetMapping()
 	public Page<Cliente> pesquisar(@RequestParam(required = false, 
 			defaultValue = "") String nome, Pageable pageable) {

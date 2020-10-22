@@ -38,8 +38,4 @@ public class StandardError {
 	public void setTimestamp(Long timestamp) {
 		this.timestamp = timestamp;
 	}
-	
-	
-	
-	
 }

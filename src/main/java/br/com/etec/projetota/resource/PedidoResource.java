@@ -63,7 +63,7 @@ public class PedidoResource {
 		}
 	}
 	
-	@DeleteMapping()
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		pedidoService.delete(id);
 		return ResponseEntity.noContent().build();
