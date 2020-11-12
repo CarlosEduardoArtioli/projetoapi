@@ -33,6 +33,11 @@ public class ProdutoResource {
 		return produtoService.listarProdutos();
 	}
 	
+	@GetMapping("/prod/{nome}")
+	public List<Produto> localizarProdutoNome(@PathVariable String nome) {
+		return produtoService.localizarProdutoNome(nome);
+	}
+	
 	@GetMapping()
 	public Page<Produto> pesquisar(@RequestParam(required = false, 
 			defaultValue = "") String nome, Pageable pageable) {

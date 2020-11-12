@@ -18,11 +18,15 @@ public class ProdutoService {
 
 	@Autowired
 	private ProdutoRepository produtoRepository;
-	
+
 	public List<Produto> listarProdutos() {
 		return produtoRepository.findAll();
 	}
-	
+
+	public List<Produto> localizarProdutoNome(String nome) {
+		return produtoRepository.porNome(nome);
+	}
+
 	public Page<Produto> pesquisar(String nome, Pageable pageable) {
 		return produtoRepository.findByNomeContainingOrderByNome(nome, pageable);
 	}
@@ -32,7 +36,7 @@ public class ProdutoService {
 		return produto.orElseThrow(() -> new ObjectNotFoundException(
 				"Produto não encontrada! Id: " + id + " Tipo: " + Produto.class.getName()));
 	}
-	
+
 	public Produto insert(Produto produto) {
 		return produtoRepository.save(produto);
 	}
